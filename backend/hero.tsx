@@ -1,7 +1,0 @@
-PORT=4000
-DB_URL=mongodb+srv://karham45_db_user:hb4gMDQKT9KUjVh8@sparrows.liyzbzd.mongodb.net/?retryWrites=true&w=majority&appName=Sparrows
-
-JWT_SECRET="iueuigfuweigfiewufgiuweiewguifewiufwefhvewfvhjrgbiutoiqueouiweruoiweori34594terejiht4578332hi4532h5kj347886BNCnsdabsdfksdbq12o34082384504YWYUEYUREWVRDSVYFDVJRTYOIRYIOYUYNVCBNMCVmregnregireiugbe"
-CLOUDINARY_CLOUD_NAME=dwqhgta5r
-CLOUDINARY_API_KEY=593332374789885
-CLOUDINARY_API_SECRET=khVuqj54yckX3_V5BQp-R27jSF4
