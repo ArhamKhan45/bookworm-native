@@ -1,6 +1,6 @@
 import { create } from "zustand";
-import { API_URL } from "@/constants/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { BACKEND_SITE_URL } from "@env";
 
 export const useAuthStore = create((set) => ({
   user: null,
@@ -10,8 +10,10 @@ export const useAuthStore = create((set) => ({
 
   register: async (fullName, username, email, password) => {
     set({ isLoading: true });
+    const url = `${BACKEND_SITE_URL}/auth/register`;
+    console.log(url);
     try {
-      const res = await fetch(`${API_URL}/auth/register`, {
+      const res = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -23,9 +25,9 @@ export const useAuthStore = create((set) => ({
           password,
         }),
       });
-
+      console.log(res);
       const data = await res.json();
-      console.log(data);
+      // console.log(data);
 
       if (!res.ok) throw new Error(data.message || "Something went wrong");
 

@@ -38,9 +38,15 @@ const Signup = () => {
       Alert.alert("Passwords do not match");
       return;
     }
+
     const result = await register(fullName, username, email, password);
 
-    if (!result.success) Alert.alert("Error", result.error);
+    if (!result.success) {
+      Alert.alert("Error", result.error);
+    } else {
+      Alert.alert("Signup successful!");
+      router.replace("/(auth)/signup");
+    }
   };
 
   return (
