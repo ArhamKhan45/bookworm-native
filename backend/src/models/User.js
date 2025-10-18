@@ -8,8 +8,8 @@ const userSchema = new Schema(
     },
     username: {
       type: String,
-      required: true,
       unique: true,
+      required: true,
       match: [/^[a-zA-Z0-9._]{3,30}$/, "Username is invalid"],
     },
     email: {
@@ -21,6 +21,7 @@ const userSchema = new Schema(
       type: String,
       required: true,
       minlength: 6,
+      select: false,
     },
     avatar: {
       type: String,

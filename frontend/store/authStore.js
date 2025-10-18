@@ -1,0 +1,42 @@
+import { create } from "zustand";
+import { API_URL } from "@/constants/api";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+export const useAuthStore = create((set) => ({
+  user: null,
+  token: null,
+  isLoading: false,
+  isCheckingAuth: true,
+
+  register: async (fullName, username, email, password) => {
+    set({ isLoading: true });
+    try {
+      const res = await fetch(`${API_URL}/auth/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          fullName,
+          username,
+          email,
+          password,
+        }),
+      });
+
+      const data = await res.json();
+      console.log(data);
+
+      if (!res.ok) throw new Error(data.message || "Something went wrong");
+
+      await AsyncStorage.setItem("user", data.user);
+      await AsyncStorage.setItem("token", data.token);
+
+      set({ token: data.token, user: data.user, isLoading: false });
+      return { success: true };
+    } catch (error) {
+      set({ isLoading: false });
+      return { success: false, error: error.message };
+    }
+  },
+}));
