@@ -10,19 +10,23 @@ export const useAuthStore = create((set) => ({
 
   register: async (fullName, username, email, password) => {
     set({ isLoading: true });
+
     try {
-      const res = await fetch(`${API_URL}/auth/register`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          fullName,
-          username,
-          email,
-          password,
-        }),
-      });
+      const res = await fetch(
+        `${process.env.EXPO_PUBLIC_BACKEND_SITE_URL}/auth/register`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            fullName,
+            username,
+            email,
+            password,
+          }),
+        }
+      );
 
       const data = await res.json();
       console.log(data);
