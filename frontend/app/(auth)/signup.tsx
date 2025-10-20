@@ -26,8 +26,6 @@ const Signup = () => {
 
   const { user, isLoading, register } = useAuthStore();
 
-  const router = useRouter();
-
   const handleSignup = async () => {
     if (!fullName || !username || !email || !password || !confirmPassword) {
       Alert.alert("Please fill in all required fields");
@@ -44,7 +42,6 @@ const Signup = () => {
       Alert.alert("Error", result.error);
     } else {
       Alert.alert(`Welcome!, ${user?.fullName}`);
-      router.push("/");
     }
   };
 
@@ -203,7 +200,7 @@ const Signup = () => {
 
           <View style={styles.footer}>
             <Text style={styles.footerText}>Already have an account?</Text>
-            <Link href="/(auth)/login" asChild>
+            <Link href="/(auth)" asChild>
               <TouchableOpacity>
                 <Text style={styles.link}>Login</Text>
               </TouchableOpacity>

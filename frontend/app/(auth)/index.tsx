@@ -21,7 +21,6 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const { user, isLoading, login, token } = useAuthStore();
-  const router = useRouter();
 
   const handleLogin = async () => {
     if (!email && !password) {
@@ -33,7 +32,6 @@ const Login = () => {
       Alert.alert("Error", result.error);
     } else {
       Alert.alert(`Hey!, ${user?.fullName}`);
-      router.push("/");
     }
   };
 
