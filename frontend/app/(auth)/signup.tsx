@@ -24,7 +24,7 @@ const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const { user, isLoading, register, token } = useAuthStore();
+  const { user, isLoading, register } = useAuthStore();
 
   const router = useRouter();
 
@@ -43,8 +43,8 @@ const Signup = () => {
     if (!result.success) {
       Alert.alert("Error", result.error);
     } else {
-      Alert.alert("Signup successful!");
-      router.replace("/(auth)/signup");
+      Alert.alert(`Welcome!, ${user?.fullName}`);
+      router.push("/");
     }
   };
 
@@ -203,7 +203,7 @@ const Signup = () => {
 
           <View style={styles.footer}>
             <Text style={styles.footerText}>Already have an account?</Text>
-            <Link href="/(auth)" asChild>
+            <Link href="/(auth)/login" asChild>
               <TouchableOpacity>
                 <Text style={styles.link}>Login</Text>
               </TouchableOpacity>

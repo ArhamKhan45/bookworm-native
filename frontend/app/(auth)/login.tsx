@@ -1,6 +1,7 @@
 import { useState } from "react";
 import {
   ActivityIndicator,
+  Alert,
   Image,
   KeyboardAvoidingView,
   Platform,
@@ -12,15 +13,29 @@ import {
 import styles from "@/assets/styles/login.styles";
 import { Ionicons } from "@expo/vector-icons";
 import COLORS from "@/constants/colors";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
+import { useAuthStore } from "@/store/authStore";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const { user, isLoading, login, token } = useAuthStore();
+  const router = useRouter();
 
-  const handleLogin = () => {};
+  const handleLogin = async () => {
+    if (!email && !password) {
+      Alert.alert("Please fill in all required fields");
+      return;
+    }
+    const result = await login(email, password);
+    if (!result.success) {
+      Alert.alert("Error", result.error);
+    } else {
+      Alert.alert(`Hey!, ${user?.fullName}`);
+      router.push("/");
+    }
+  };
 
   return (
     <KeyboardAvoidingView
@@ -105,7 +120,7 @@ const Login = () => {
             {/* footer */}
             <View style={styles.footer}>
               <Text style={styles.footerText}>Don't have an account?</Text>
-              <Link href="/signup" asChild>
+              <Link href="/(auth)/signup" asChild>
                 <TouchableOpacity>
                   <Text style={styles.link}>Sign Up</Text>
                 </TouchableOpacity>

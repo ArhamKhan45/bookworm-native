@@ -22,7 +22,7 @@ export default function Index() {
       />
 
       <Text>Arham Khan is here</Text>
-      <Link href="/(auth)">Login</Link>
+      <Link href="/(auth)/login">Login</Link>
     </View>
   );
 }
