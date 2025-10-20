@@ -1,5 +1,4 @@
 import { create } from "zustand";
-import { API_URL } from "@/constants/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const useAuthStore = create((set) => ({
