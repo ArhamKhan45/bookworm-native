@@ -28,7 +28,7 @@ export const useAuthStore = create((set) => ({
       );
 
       const data = await res.json();
-      console.log(data);
+      // console.log(data);
 
       if (!res.ok) throw new Error(data.message || "Something went wrong");
 
@@ -40,6 +40,19 @@ export const useAuthStore = create((set) => ({
     } catch (error) {
       set({ isLoading: false });
       return { success: false, error: error.message };
+    }
+  },
+
+  checkAuth: async () => {
+    try {
+      const token = await AsyncStorage.getItem("token");
+      const userJson = await AsyncStorage.getItem("user");
+
+      const user = userJson ? JSON.parse(userJson) : null;
+
+      set({ token, user });
+    } catch (error) {
+      console.log("Auth Check Failed", error);
     }
   },
 }));

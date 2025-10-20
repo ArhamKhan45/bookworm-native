@@ -16,8 +16,8 @@ job.start();
 app.use(cors());
 app.use(express.json());
 
-// ✅ Add a health route so your cron GET request doesn’t 404
-app.get("/", (req, res) => {
+// ✅ Add a health route so server will always stay away
+app.get("/server/wakeup", (req, res) => {
   res.status(200).json({
     status: "✅ Bookworm backend is alive!",
     uptime: process.uptime(),
