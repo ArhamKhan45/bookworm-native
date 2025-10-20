@@ -93,7 +93,7 @@ export default function Create() {
         : "image/jpeg";
 
       const imageDataUrl = `data:${imageType};base64,${imageBase64}`;
-
+      console.log(title, caption, rating);
       const response = await fetch(
         `${process.env.EXPO_PUBLIC_BACKEND_API_URL}/books`,
         {
