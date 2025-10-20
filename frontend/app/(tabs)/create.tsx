@@ -19,6 +19,7 @@ import { useAuthStore } from "../../store/authStore";
 
 import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system";
+import * as ImageManipulator from "expo-image-manipulator";
 
 export default function Create() {
   const [title, setTitle] = useState("");
@@ -37,7 +38,6 @@ export default function Create() {
       if (Platform.OS !== "web") {
         const { status } =
           await ImagePicker.requestMediaLibraryPermissionsAsync();
-
         if (status !== "granted") {
           Alert.alert(
             "Permission Denied",
@@ -48,28 +48,27 @@ export default function Create() {
       }
 
       const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: "images",
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
         aspect: [4, 3],
-        quality: 0.8,
-        base64: true,
+        quality: 1,
       });
 
       if (!result.canceled) {
-        setImage(result?.assets[0]?.uri);
+        const asset = result.assets[0];
+        setImage(asset.uri);
 
-        if (result.assets[0].base64) {
-          setImageBase64(result?.assets[0]?.base64);
-        } else {
-          const base64 = await FileSystem.readAsStringAsync(
-            result.assets[0].uri,
-            {
-              encoding: "base64" as any,
-            }
-          );
-
-          setImageBase64(base64);
-        }
+        // Resize the image to max width/height
+        const manipulatedImage = await ImageManipulator.manipulateAsync(
+          asset.uri,
+          [{ resize: { width: 800 } }],
+          {
+            compress: 0.5,
+            format: ImageManipulator.SaveFormat.JPEG,
+            base64: true,
+          }
+        );
+        setImageBase64(manipulatedImage.base64 as any);
       }
     } catch (error) {
       console.error("Error picking image:", error);
