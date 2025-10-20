@@ -5,7 +5,7 @@ const job = new cron.CronJob("*/14 * * * *", function () {
   https
     .get(process.env.BACKEND_SITE_URL, (res) => {
       if (res.statusCode === 200) console.log("GET request sent successfully");
-      else console.log("GET request failed, Corn is failed", res.statusCode);
+      else console.log("GET request failed, Cronjob is failed", res.statusCode);
     })
     .on("error", (e) => console.error("Error while sending request", e));
 });
